@@ -29,21 +29,33 @@ namespace crud_project_c_sharp
             
             try
             {
-                int id = int.Parse(textBox_id.Text);
+                string id = textBox_id.Text.Trim();
                 string name = textBox_name.Text.Trim();
-                if (string.IsNullOrEmpty(name))
+                string gender = comboBox_gender.Text.Trim();
+                string age = textBox_age.Text.Trim() ;
+
+                if  (string.IsNullOrEmpty(name)|| string.IsNullOrEmpty(gender) ) 
                 {
-                    MessageBox.Show(" pleas enter name !");
+                    MessageBox.Show(" pleas enter all field !");
+                    return;
+                }
+                if ( (!int.TryParse(id, out int parsedId)) || (!int.TryParse(age, out int parsedAge)))
+                {
+                    MessageBox.Show(" pleas enter age or id as a number!");
                     return;
                 }
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     con.Open();
-                    string insert = "INSERT INTO mstudent(id, name) VALUES (@id, @name)";
+                    string insert = "INSERT INTO mstudent(id, name,gender, age ) VALUES (@id, @name, @gender, @age)";
                  SqlCommand cmd = new SqlCommand(insert, con);
                     cmd.Parameters.AddWithValue("@id",id);
                     cmd.Parameters.AddWithValue("@name",name);
-                   int row = cmd.ExecuteNonQuery();
+                    cmd.Parameters.AddWithValue("@gender", gender);
+                    cmd.Parameters.AddWithValue("@age", age);
+
+
+                    int row = cmd.ExecuteNonQuery();
                     if (row > 0)
                     {
                         MessageBox.Show("insert successfully !");
@@ -64,6 +76,8 @@ namespace crud_project_c_sharp
         {
             textBox_id.Clear();
             textBox_name.Clear();
+            textBox_age.Clear();
+            comboBox_gender.Items.Clear();
         }
         private void LoadStudent()
         {
@@ -73,7 +87,7 @@ namespace crud_project_c_sharp
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     con.Open();
-                    string getTex = "SELECT  id , name FROM mstudent";
+                    string getTex = "SELECT  id, name, gender, age FROM mstudent";
                     SqlDataAdapter sql_adapter = new SqlDataAdapter(getTex, con);
                     DataTable data_table = new DataTable();
                     sql_adapter.Fill(data_table);
@@ -92,8 +106,12 @@ namespace crud_project_c_sharp
             {
                 int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells["id"].Value);
                 string name = dataGridView1.CurrentRow.Cells["name"].Value.ToString();
+                string gender = dataGridView1.CurrentRow.Cells["gender"].Value.ToString();
+                string age = dataGridView1.CurrentRow.Cells["age"].Value.ToString();
 
-                Edit editform = new Edit(id, name);
+
+
+                Edit editform = new Edit( id, name,gender, age);
                 editform.ShowDialog();
 
                 // Optionally reload data after editing
@@ -112,8 +130,10 @@ namespace crud_project_c_sharp
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
                 int id = Convert.ToInt32(row.Cells["id"].Value);
                 string name = row.Cells["name"].Value.ToString();
+                string gender = row.Cells["gender"].Value.ToString();
+                string age = row.Cells["age"].Value.ToString();
                 // send data to form edit 
-                Edit editform = new Edit(id, name);
+                Edit editform = new Edit(id ,name, gender, age);
 
                 editform.ShowDialog();
             }

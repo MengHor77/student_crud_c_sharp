@@ -5,6 +5,8 @@ use student;
 go 
 CREATE TABLE mstudent(
 id INT NOT NULL PRIMARY KEY,
-name VARCHAR(100) NOT NULL
+name VARCHAR(100) NOT NULL,
+gender VARCHAR(100) NOT NULL,
+age INT NOT NULL
 )
 

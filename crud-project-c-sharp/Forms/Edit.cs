@@ -14,38 +14,47 @@ namespace crud_project_c_sharp.Forms
     public partial class Edit : Form
     {
         string constr = @"Data Source=DESKTOP-S99S529\SQLEXPRESS;Initial Catalog=student;Integrated Security=True;Encrypt=False";
-
-        public Edit( int id , string name )
+        int  id;
+        public Edit( int   id ,string name, string gender, string age )
         {
             InitializeComponent();
-            textBox_id.Text = id.ToString();
+        
             textBox_name.Text = name;
+            comboBox_gender.Text = gender;
+            textBox_age.Text = age;
+            this.id = id;
         }
 
         private void button_save_Click(object sender, EventArgs e)
         {
             try
             {
-                int id = int.Parse(textBox_id.Text);
                 string name = textBox_name.Text;
+                string gender = comboBox_gender.Text;
+                string age = textBox_age.Text;
 
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     con.Open();
-                    string insert = "INSERT INTO mstudent(id, name) VALUES (@id, @name)";
-                    SqlCommand cmd = new SqlCommand(insert, con);
-                    cmd.Parameters.AddWithValue("@id", id);
+                    string Update = "UPDATE  mstudent SET name =@name, gender= @gender, age= @age WHERE id =@id";
+                    SqlCommand cmd = new SqlCommand(Update, con);
                     cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@gender", gender);
+                    cmd.Parameters.AddWithValue("@age", age);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+
+
                     int row = cmd.ExecuteNonQuery();
                     if (row > 0)
                     {
-                        MessageBox.Show("insert successfully !");
+                        MessageBox.Show("Update  successfully !");
                         
                        
                     }
                     else
                     {
-                        MessageBox.Show("insert faile");
+                        MessageBox.Show("Update failed");
                     }
                 }
             }
