@@ -181,5 +181,12 @@ namespace crud_project_c_sharp
             }
         }
 
+        private void label_course_Click(object sender, EventArgs e)
+        {
+            Course course = new Course();
+            course.ShowDialog();
+
+        }
+
     }
 }

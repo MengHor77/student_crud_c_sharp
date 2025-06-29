@@ -49,11 +49,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\Course.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Course.Designer.cs">
+      <DependentUpon>Course.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Edit.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Edit.Designer.cs">
       <DependentUpon>Edit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EditFormCourse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EditFormCourse.Designer.cs">
+      <DependentUpon>EditFormCourse.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -63,8 +75,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\Course.resx">
+      <DependentUpon>Course.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Edit.resx">
       <DependentUpon>Edit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EditFormCourse.resx">
+      <DependentUpon>EditFormCourse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
